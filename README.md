@@ -8,6 +8,25 @@ This is a so-called "`monorepo`" - a single repository containing all the compon
 
 Your task is to make a small modification to the app code, according to the instructions below.
 
+## About Us implementation
+
+Open `http://localhost:7002/about` after starting the back end and front end.
+The navigation also includes an **About Us** link.
+
+- `GET http://localhost:5002/about` returns the heading, biography, interests,
+  image URL, alt text, and caption as JSON.
+- The React page fetches that response and renders the content, with loading
+  and error states. The layout stacks on smaller screens.
+- Express serves the portrait at `/images/inoo-jung.png`. The image URL is
+  supplied by the API rather than hard-coded in the page.
+- The existing Home and Messages pages are preserved. MongoDB is required
+  for Messages; the About Us route does not query the database.
+
+This checkout also includes pnpm lockfiles. With pnpm installed, run
+`pnpm install` in each application directory, `pnpm start` in `back-end`,
+and `pnpm dev` in `front-end`. Run `pnpm build` in `front-end` to check the
+production build. The original npm instructions below are retained.
+
 ## Exercise Requirements
 
 To complete this exercise:

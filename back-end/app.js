@@ -5,8 +5,32 @@ const cors = require('cors') // middleware for enabling CORS (Cross-Origin Resou
 const mongoose = require('mongoose')
 
 const app = express() // instantiate an Express object
+const path = require('path')
 app.use(morgan('dev', { skip: (req, res) => process.env.NODE_ENV === 'test' })) // log all incoming requests, except when in unit test mode.  morgan has a few logging default styles - dev is a nice concise color-coded style
 app.use(cors()) // allow cross-origin resource sharing
+app.use('/images', express.static(path.join(__dirname, 'public/images')))
+
+// Keep all About Us content, including the image URL, in the API response.
+app.get('/about', (req, res) => {
+  res.json({
+    title: 'About Us',
+    eyebrow: 'NYU / Computer Science',
+    name: 'Inoo Jung',
+    introduction: 'A little about me, on and off campus.',
+    paragraphs: [
+      "Hi, I'm Inoo Jung, a Computer Science student at New York University. This page is part of my Agile Development and DevOps coursework, where I am learning how the different parts of a web application work together.",
+      'Outside of class, I enjoy watching American football. It is one of my favorite ways to spend my free time and take a break from studying.',
+      'Running is another hobby of mine. Between computer science, watching football, and going for a run, these are a few of the things that make up my life as a student.'
+    ],
+    interestsLabel: 'Off the clock',
+    interests: ['American football', 'Running'],
+    image: {
+      url: '/images/inoo-jung.png',
+      alt: 'Inoo Jung wearing sunglasses beneath a Community Goods sign',
+      caption: 'Inoo Jung / New York University'
+    }
+  })
+})
 
 // use express's builtin body-parser middleware to parse any data included in a request
 app.use(express.json()) // decode JSON-formatted incoming POST data
